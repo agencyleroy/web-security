@@ -1,0 +1,20 @@
+{
+    "name": "agencyleroy/web-security",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Marcus Aschan",
+            "email": "marcusaschan@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "agencyleroy\\websecurity\\": "src/"
+        }
+    },
+    "extra": {
+        "handle": "web-security",
+        "name": "Web security"
+    }
+}

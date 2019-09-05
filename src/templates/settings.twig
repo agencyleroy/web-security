@@ -1,0 +1,45 @@
+{% import "_includes/forms" as forms %}
+
+<hr>
+
+{{ forms.lightswitchField({
+    label: "HTTP Strict Transport Security"|t,
+    name: 'httpStrictTransportSecurity',
+    on: settings.httpStrictTransportSecurity,
+    errors: settings.getErrors('httpStrictTransportSecurity'),
+    instructions: 'Enable <a href="https://infosec.mozilla.org/guidelines/web_security#http-strict-transport-security" target="_blank">HTTP Strict Transport Security</a>'|t,
+}) }}
+
+{{ forms.textField({
+    label: "HTTP Strict Transport Security max-age"|t,
+    name: 'httpStrictTransportSecurityMaxAge',
+    value: settings.httpStrictTransportSecurityMaxAge,
+    errors: settings.getErrors('httpStrictTransportSecurityMaxAge')
+}) }}
+
+<hr>
+
+{{ forms.lightswitchField({
+    label: "Content Security Policy"|t,
+    name: 'contentSecurityPolicy',
+    on: settings.contentSecurityPolicy,
+    errors: settings.getErrors('contentSecurityPolicy'),
+    instructions: 'Enable <a href="https://infosec.mozilla.org/guidelines/web_security#content-security-policy" target="_blank">Content Security Policy</a>'|t,
+}) }}
+
+{{ forms.textField({
+    name: 'contentSecurityPolicyValue',
+    value: settings.contentSecurityPolicyValue,
+    placeholder: "default-src: https:",
+    errors: settings.getErrors('contentSecurityPolicyValue'),
+}) }}
+
+<div class="field">
+    <div class="heading">
+        <div class="instructions">
+            <p>{{ "Use nonce like this: default-src: 'nonce-{{ nonce }}'"|t }}</p>
+        </div>
+    </div>
+</div>
+
+<hr>
