@@ -3,6 +3,8 @@
 namespace agencyleroy\websecurity\models;
 
 use craft\base\Model;
+use craft\helpers\StringHelper;
+use agencyleroy\websecurity\Plugin;
 
 /**
  *
@@ -28,7 +30,12 @@ class Settings extends Model
     /**
      *
      */
-    public $contentSecurityPolicyValue;
+    public $contentSecurityPolicyValue = '';
+
+    /**
+     *
+     */
+    public $rows;
 
     /**
      * @inheritdoc
@@ -40,5 +47,30 @@ class Settings extends Model
         $rules[] = [['httpStrictTransportSecurityMaxAge'], 'number', 'min' => 15768000];
 
         return $rules;
+    }
+
+    /**
+     *
+     */
+    public function getCSPValue()
+    {
+        $nonce = Plugin::getInstance()->websecurity->nonce;
+        return str_replace('{{ nonce }}', $nonce, implode($this->_CSPlines()));
+    }
+
+    /**
+     *
+     */
+    public function getRows()
+    {
+        return count($this->_CSPlines());
+    }
+
+    /**
+     *
+     */
+    private function _CSPlines()
+    {
+        return StringHelper::lines($this->contentSecurityPolicyValue);
     }
 }

@@ -9,6 +9,7 @@ use craft\web\View;
 use craft\web\Response;
 use craft\web\Application;
 use craft\helpers\Html;
+use craft\helpers\StringHelper;
 
 use agencyleroy\websecurity\models\Settings;
 use agencyleroy\websecurity\services\WebSecurity;
@@ -61,16 +62,17 @@ class Plugin extends \craft\base\Plugin
             $response = $event->sender;
 
             $settings = Plugin::getInstance()->getSettings();
-            $cspValue = str_replace('{{ nonce }}', $this->websecurity->nonce, $settings->contentSecurityPolicyValue);
+            // $contentSecurityPolicyValue = StringHelper::lines($settings->contentSecurityPolicyValue);
+            // $cspValue = str_replace('{{ nonce }}', $this->websecurity->nonce, implode($contentSecurityPolicyValue));
 
             $headers = $response->getHeaders();
 
             if ($settings->httpStrictTransportSecurity) {
-                $headers->set('Strict-Transport-Security', "max-age={$settings->httpStrictTransportSecurityMaxAge}");
+                $headers->set('Strict-Transport-Security', "max-age={$settings->httpStrictTransportSecurity}");
             }
 
             if ($settings->contentSecurityPolicy) {
-                $headers->set('Content-Security-Policy', $cspValue);
+                $headers->set('Content-Security-Policy', $settings->CSPValue);
             }
         });
     }
