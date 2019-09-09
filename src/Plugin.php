@@ -60,11 +60,7 @@ class Plugin extends \craft\base\Plugin
     {
         Event::on(Response::class, Response::EVENT_AFTER_PREPARE, function(Event $event) {
             $response = $event->sender;
-
             $settings = Plugin::getInstance()->getSettings();
-            // $contentSecurityPolicyValue = StringHelper::lines($settings->contentSecurityPolicyValue);
-            // $cspValue = str_replace('{{ nonce }}', $this->websecurity->nonce, implode($contentSecurityPolicyValue));
-
             $headers = $response->getHeaders();
 
             if ($settings->httpStrictTransportSecurity) {
@@ -84,20 +80,19 @@ class Plugin extends \craft\base\Plugin
     {
         Event::on(View::class, View::EVENT_END_PAGE, function($event) {
 
-            foreach ($event->sender->js as $scripts) {
-                foreach ($scripts as $script) {
-                    echo Html::script($script, ['nonce' => $this->websecurity->nonce]);
+            // Set inline scripts as js files instead so that we can add a nonce attribute.
+            foreach ($event->sender->js as $position => $scripts) {
+                foreach ($scripts as $key => $script) {
+                    $event->sender->jsFiles[$position][$key] = Html::script($script, ['nonce' => $this->websecurity->nonce]);
                 }
             }
-
-            foreach ($event->sender->css as $styles) {
-                foreach ($styles as $style) {
-                    echo Html::style($style, ['nonce' => $this->websecurity->nonce]);
-                }
-            }
-
+            // Clear inline scripts.
             $event->sender->js = [];
-            $event->sender->css = [];
+
+            // Add nonce attribute to inline styles.
+            foreach ($event->sender->css as $key => $style) {
+                $event->sender->css[$key] = Html::style($style, ['nonce' => $this->websecurity->nonce]);
+            }
         });
     }
 

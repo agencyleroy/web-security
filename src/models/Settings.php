@@ -63,7 +63,8 @@ class Settings extends Model
      */
     public function getRows()
     {
-        return count($this->_CSPlines());
+        $rows = count($this->_CSPlines());
+        return $rows >= 3 ? $rows : 3;
     }
 
     /**
