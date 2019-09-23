@@ -33,7 +33,7 @@
     value: settings.contentSecurityPolicyValue,
     placeholder: "object-src 'none'; \nscript-src 'nonce-{{ nonce }}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic' https: http:; \nbase-uri 'none';",
     errors: settings.getErrors('contentSecurityPolicyValue'),
-    instructions: "Use nonce like this: default-src: 'nonce-{{ nonce }}'"|t,
+    instructions: "{{ baseUrl }} and {{ nonce }} are available as tokens. Use nonce like this: default-src: 'nonce-{{ nonce }}'"|t,
     rows: settings.getRows(),
 }) }}
 

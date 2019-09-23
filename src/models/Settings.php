@@ -2,6 +2,7 @@
 
 namespace agencyleroy\websecurity\models;
 
+use Craft;
 use craft\base\Model;
 use craft\helpers\StringHelper;
 use agencyleroy\websecurity\Plugin;
@@ -55,7 +56,13 @@ class Settings extends Model
     public function getCSPValue()
     {
         $nonce = Plugin::getInstance()->websecurity->nonce;
-        return str_replace('{{ nonce }}', $nonce, implode($this->_CSPlines()));
+        $baseUrl = Craft::$app->sites->currentSite->baseUrl;
+
+        $contentSecurityPolicyValue = implode($this->_CSPlines());
+        $contentSecurityPolicyValue = preg_replace('/{{\s?nonce\s?}}/', $nonce, $contentSecurityPolicyValue);
+        $contentSecurityPolicyValue = preg_replace('/{{\s?baseUrl\s?}}/', $baseUrl, $contentSecurityPolicyValue);
+
+        return $contentSecurityPolicyValue;
     }
 
     /**
