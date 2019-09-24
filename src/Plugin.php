@@ -91,7 +91,7 @@ class Plugin extends \craft\base\Plugin
 
             // Add nonce attribute to inline styles.
             foreach ($event->sender->css as $key => $style) {
-                $event->sender->css[$key] = Html::style($style, ['nonce' => $this->websecurity->nonce]);
+                $event->sender->css[$key] = Html::style(strip_tags($style), ['nonce' => $this->websecurity->nonce]);
             }
         });
     }

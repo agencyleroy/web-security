@@ -1,7 +1,7 @@
 {
     "name": "agencyleroy/web-security",
     "type": "craft-plugin",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "authors": [
         {
             "name": "Marcus Aschan",
