@@ -38,3 +38,47 @@
 }) }}
 
 <hr>
+
+{{ forms.selectField({
+    label: "X-Frame-Options"|t,
+    name: 'xFrameOptions',
+    value: settings.xFrameOptions,
+    options: {
+        '0': 'disabled',
+        'deny': 'deny',
+        'sameorigin': 'sameorigin',
+    },
+    errors: settings.getErrors('xFrameOptions'),
+    instructions: 'Enable <a href="https://infosec.mozilla.org/guidelines/web_security#x-frame-options" target="_blank">X-Frame-Options</a>'|t,
+}) }}
+
+<hr>
+
+{{ forms.selectField({
+    label: "X-XSS-Protection"|t,
+    name: 'xXssProtection',
+    value: settings.xXssProtection,
+    options: {
+        '0': '0',
+        '1': '1',
+        '1; mode=block': '1; mode=block',
+    },
+    errors: settings.getErrors('xXssProtection'),
+    instructions: 'Enable <a href="https://infosec.mozilla.org/guidelines/web_security#x-xss-protection" target="_blank">X-XSS-Protection</a>'|t,
+}) }}
+
+<hr>
+
+{{ forms.selectField({
+    label: "X-Content-Type-Options"|t,
+    name: 'xContentTypeOptions',
+    value: settings.xContentTypeOptions,
+    options: {
+        '0': 'disabled',
+        'nosniff': 'nosniff',
+    },
+    errors: settings.getErrors('xContentTypeOptions'),
+    instructions: 'Enable <a href="https://infosec.mozilla.org/guidelines/web_security#x-content-type-options" target="_blank">X-Content-Type-Options</a>'|t,
+}) }}
+
+<hr>

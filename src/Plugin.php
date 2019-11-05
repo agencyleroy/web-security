@@ -70,6 +70,20 @@ class Plugin extends \craft\base\Plugin
             if ($settings->contentSecurityPolicy) {
                 $headers->set('Content-Security-Policy', $settings->CSPValue);
             }
+
+            if ($settings->xFrameOptions) {
+                $headers->set('X-Frame-Options', $settings->xFrameOptions);
+            }
+
+            if ($settings->xXssProtection) {
+                $headers->set('X-XSS-Protection', $settings->xXssProtection);
+            }
+
+            if ($settings->xContentTypeOptions) {
+                $headers->set('X-Content-Type-Options', $settings->xContentTypeOptions);
+            }
+
+            $headers->remove('x-powered-by');
         });
     }
 
