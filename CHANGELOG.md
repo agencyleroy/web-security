@@ -4,3 +4,7 @@
 ### Updated
 - Add LICENSE.md
 - Add CHANGELOG.md
+
+## 1.0.8 - 2018-11-13
+### Updated
+- Updated composer.json
